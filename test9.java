@@ -11,5 +11,6 @@ public class test9 {
             div = div*5;
         }
         System.out.println(ans);
+        sc.close();
     }
 }
