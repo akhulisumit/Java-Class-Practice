@@ -20,5 +20,6 @@ public class test16 {
         else{
             System.out.println("Neither");
         }
+        sc.close();
     }
 }

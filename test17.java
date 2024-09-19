@@ -19,6 +19,7 @@ public class test17 {
             }
         }
         System.out.println(count);
+        sc.close();
 
     }
 }

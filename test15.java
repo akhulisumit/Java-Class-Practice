@@ -21,6 +21,7 @@ public class test15 {
             if(!b){
                 System.out.print(array[i]+" ");
             }
-        }        
+        }   
+        sc.close();     
     }
 }
