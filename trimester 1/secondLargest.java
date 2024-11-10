@@ -34,5 +34,6 @@ public class secondLargest {
         } else {
             System.out.println(secondMax);
         }
+        sc.close();
     }
 }

@@ -1,4 +1,3 @@
-import java.lang.*;
 import java.util.*;
 
 public class check {
@@ -45,6 +44,6 @@ public class check {
         //     System.out.println("Sum of Odd Index Digit : "+ evenSum);
         //     System.out.println("Sum of Even Index Digit : "+ oddSum);
         // }
-
+        sc.close();
     }
 }

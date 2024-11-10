@@ -45,6 +45,6 @@ public class test23 {
         //     System.out.println("Sum of Odd Index Digit : "+ evenSum);
         //     System.out.println("Sum of Even Index Digit : "+ oddSum);
         // }
-
+        sc.close();
     }
 }

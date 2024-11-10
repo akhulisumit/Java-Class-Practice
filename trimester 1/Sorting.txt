@@ -1,0 +1,172 @@
+Insertion Sort (Java Code)
+java
+Copy code
+public class InsertionSort {
+    public static void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int key = arr[i]; // Element to be inserted into the sorted section
+            int j = i - 1;
+            
+            // Move elements of arr[0..i-1] that are greater than key to one position ahead
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j]; // Shift larger element to the right
+                j = j - 1;
+            }
+            // Place key at its correct position in the sorted part of the array
+            arr[j + 1] = key;
+        }
+    }
+
+    // Helper method to print the array
+    public static void printArray(int[] arr) {
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {8, 5, 2, 9, 3, 6};
+        System.out.println("Original Array:");
+        printArray(arr);
+        
+        insertionSort(arr);
+        
+        System.out.println("Sorted Array:");
+        printArray(arr);
+    }
+}
+Explanation:
+How Insertion Sort Works:
+Insertion Sort works by dividing the array into two parts: the sorted part and the unsorted part.
+Initially, the sorted part contains only the first element, and the unsorted part contains the rest of the array.
+For each element in the unsorted part, we compare it to the elements in the sorted part. We keep shifting larger elements in the sorted part to the right to make space for the current element.
+The current element (called the key) is then inserted in its correct position in the sorted part.
+Step-by-Step Example:
+Let's sort the array [8, 5, 2, 9, 3, 6].
+
+Initial Array: [8, 5, 2, 9, 3, 6]
+
+We start with i = 1 (key = 5). Compare it with the previous element 8. Since 8 > 5, we shift 8 to the right and insert 5 at the beginning.
+Array: [5, 8, 2, 9, 3, 6]
+Next Iteration: i = 2 (key = 2). Compare with 8 and 5. Both are greater, so shift them to the right and insert 2.
+
+Array: [2, 5, 8, 9, 3, 6]
+Next Iteration: i = 3 (key = 9). Compare with 8. No need to shift since 9 > 8. Leave as is.
+
+Array: [2, 5, 8, 9, 3, 6]
+Next Iteration: i = 4 (key = 3). Compare with 9, 8, and 5. Shift them to the right and insert 3.
+
+Array: [2, 3, 5, 8, 9, 6]
+Next Iteration: i = 5 (key = 6). Compare with 9 and 8. Shift 9 and 8 to the right, and insert 6.
+
+Final sorted array: [2, 3, 5, 6, 8, 9]
+Selection Sort (Java Code)
+java
+Copy code
+public class SelectionSort {
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i; // Assume the minimum is at index i
+
+            // Find the minimum element in the unsorted part
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            // Swap the found minimum element with the first unsorted element
+            int temp = arr[minIndex];
+            arr[minIndex] = arr[i];
+            arr[i] = temp;
+        }
+    }
+
+    public static void printArray(int[] arr) {
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {8, 5, 2, 9, 3, 6};
+        System.out.println("Original Array:");
+        printArray(arr);
+
+        selectionSort(arr);
+
+        System.out.println("Sorted Array:");
+        printArray(arr);
+    }
+}
+Explanation of Selection Sort:
+How it Works:
+
+Selection Sort works by selecting the smallest element from the unsorted part of the array and swapping it with the first unsorted element.
+After each iteration, the size of the sorted part of the array increases by one.
+Step-by-Step:
+
+Find the minimum element in the array and swap it with the first element.
+Find the second smallest element and swap it with the second element.
+Repeat this process for the rest of the array.
+Bubble Sort (Java Code)
+java
+Copy code
+public class BubbleSort {
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+
+        // Outer loop for all elements
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+
+            // Inner loop to compare adjacent elements
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap if the element is greater than the next
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+
+            // If no two elements were swapped in the inner loop, break
+            if (!swapped) break;
+        }
+    }
+
+    public static void printArray(int[] arr) {
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {8, 5, 2, 9, 3, 6};
+        System.out.println("Original Array:");
+        printArray(arr);
+
+        bubbleSort(arr);
+
+        System.out.println("Sorted Array:");
+        printArray(arr);
+    }
+}
+Explanation of Bubble Sort:
+How it Works:
+
+Bubble Sort compares adjacent elements and swaps them if they are in the wrong order.
+This process is repeated for all elements in the array, and the largest elements "bubble" up to the end of the array after each iteration.
+Step-by-Step:
+
+Compare the first two elements. Swap if necessary.
+Continue comparing adjacent elements, pushing the largest to the end.
+Repeat the process for the remaining unsorted part of the array.
+Let me know if you need further clarification or examples!

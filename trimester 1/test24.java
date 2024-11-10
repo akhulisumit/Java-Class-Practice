@@ -13,5 +13,6 @@ public class test24 {
         int b = sc.nextInt();
         int c =  sum (a,b);
         System.out.println(c);
+        sc.close();
     }
 }
