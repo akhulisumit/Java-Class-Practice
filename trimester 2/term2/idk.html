@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Paper Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #495057;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: none;
+        }
+
+        .form-group button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .output h2 {
+            margin-top: 0;
+        }
+
+        .output pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .add-section {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .add-section button {
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-section button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Question Paper Maker</h1>
+        <form id="questionPaperForm">
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" placeholder="Enter the subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="topics">Topics:</label>
+                <textarea id="topics" name="topics" rows="3" placeholder="Enter topics separated by commas" required></textarea>
+            </div>
+
+            <div id="questionsContainer">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="numberOfQuestions">Number of Questions:</label>
+                        <input type="number" id="numberOfQuestions" name="numberOfQuestions[]" min="1" placeholder="Enter the number of questions" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marksPerQuestion">Marks per Question:</label>
+                        <input type="number" id="marksPerQuestion" name="marksPerQuestion[]" min="1" placeholder="Enter marks per question" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-section">
+                <button type="button" id="addQuestionSet">Add More</button>
+            </div>
+
+            <div class="form-group">
+                <label for="maxMarks">Maximum Marks:</label>
+                <input type="number" id="maxMarks" name="maxMarks" min="1" placeholder="Enter the maximum marks" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Generate Question Paper</button>
+            </div>
+        </form>
+
+        <div class="output" id="output" style="display: none;">
+            <h2>Generated Question Paper</h2>
+            <pre id="generatedPaper"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addQuestionSet').addEventListener('click', function() {
+            const container = document.getElementById('questionsContainer');
+
+            const newRow = document.createElement('div');
+            newRow.classList.add('form-row');
+
+            newRow.innerHTML = `
+                <div class="form-group">
+                    <label for="numberOfQuestions">Number of Questions:</label>
+                    <input type="number" name="numberOfQuestions[]" min="1" placeholder="Enter the number of questions" required>
+                </div>
+                <div class="form-group">
+                    <label for="marksPerQuestion">Marks per Question:</label>
+                    <input type="number" name="marksPerQuestion[]" min="1" placeholder="Enter marks per question" required>
+                </div>
+            `;
+
+            container.appendChild(newRow);
+        });
+
+        document.getElementById('questionPaperForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const subject = document.getElementById('subject').value;
+            const topics = document.getElementById('topics').value.split(',').map(topic => topic.trim());
+            const numberOfQuestions = Array.from(document.querySelectorAll('[name="numberOfQuestions[]"]')).map(input => parseInt(input.value, 10));
+            const marksPerQuestion = Array.from(document.querySelectorAll('[name="marksPerQuestion[]"]')).map(input => parseInt(input.value, 10));
+            const maxMarks = parseInt(document.getElementById('maxMarks').value, 10);
+
+            let output = `Subject: ${subject}\n`;
+            output += `Topics: ${topics.join(', ')}\n`;
+            output += `Maximum Marks: ${maxMarks}\n`;
+
+            output += '\nQuestions:\n';
+            let questionCount = 1;
+
+            numberOfQuestions.forEach((num, index) => {
+                const marks = marksPerQuestion[index];
+                for (let i = 0; i < num; i++) {
+                    const topic = topics[questionCount % topics.length];
+                    output += `${questionCount}. [${marks} marks] Question from topic: ${topic}\n`;
+                    questionCount++;
+                }
+            });
+
+            document.getElementById('generatedPaper').textContent = output;
+            document.getElementById('output').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
